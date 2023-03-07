@@ -2,6 +2,23 @@
 
 
 
+<br>
+
+<img src='imgs/framework.png' align="left">  
+
+<br><br><br>
+
+We provide our PyTorch implementation of [Exploring Negatives in Contrastive Learning for Unpaired Image-to-Image Translation](https://arxiv.org/abs/2204.11018)(PUT).
+
+In this paper, we propose a novel model called PUT for unpaired image-to-image translation. Compared with the previous contrastive learning methods, our proposed PUT is stable to learn the information between the corresponding patches, leading to a more effective contrast learning system
+
+## Example Results
+
+### Single Image Unpaired Translation
+
+<img src='imgs/High-resolution-painting.png' align="left">  
+
+
 ## Getting Started
 
 ### Installation
@@ -79,13 +96,13 @@ python test_fid.py --dataroot ./datasets/horse2zebra --name h2z_pretrained --num
 
 For CityScapes dataset, we frist resize 256*128 then calculate the  FID
 
-```
+```bash
 python test_fid.py --name citys_PUT5 --dataroot ./datasets/cityscapes/ --direction BtoA --num_test 500  --aspect_ratio 2.0 --gpu_id 0
 ```
 
 For mIoU computation, we use [drn-22](https://github.com/fyu/drn).
 
-```
+```bash
 python3 segment.py test -d <data_folder> -c 19 --arch drn_d_22     --pretrain ./checkpoint/drn_d_22_cityscapes.pth --phase test --batch-size 1
 ```
 
