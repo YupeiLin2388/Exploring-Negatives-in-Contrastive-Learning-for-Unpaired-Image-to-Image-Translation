@@ -17,8 +17,8 @@ In this paper, we propose a novel model called PUT for unpaired image-to-image t
 <br>
 <img src='imgs/result.jpg' align="left"> 
 <br>
-### Single Image Unpaired Translation
 
+### Single Image Unpaired Translation
 <img src='./imgs/High-resolution-painting.png' align="left">  
 
 
