@@ -39,7 +39,9 @@ Please refer to the original [CUT](https://github.com/taesungp/contrastive-unpai
 Download the pre-trained models using the following links and put them under`checkpoints/` directory.
 
 horse2zebra:[google drive](https://drive.google.com/drive/folders/1WHlLcdwyoaYvXiHl-yOd6zZb-ja854_V?usp=sharing)
+
 CityScape :[google drive](https://drive.google.com/drive/folders/1HYNhX4SbrqtC8Cv6kgl71hbIeKrz_ozO?usp=sharing)
+
 image2monet:[google drive](https://drive.google.com/drive/folders/1xQ17DKW6faNXvksd87UGoLsYYeN3PAGV?usp=sharing)
 
 ## evaluate
