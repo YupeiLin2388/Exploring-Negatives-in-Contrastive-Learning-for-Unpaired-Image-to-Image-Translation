@@ -13,7 +13,10 @@ We provide our PyTorch implementation of [Exploring Negatives in Contrastive Lea
 In this paper, we propose a novel model called PUT for unpaired image-to-image translation. Compared with the previous contrastive learning methods, our proposed PUT is stable to learn the information between the corresponding patches, leading to a more effective contrast learning system
 
 ## Example Results
-
+### Unpaired Image-to-Image Translation
+<br>
+<img src='imgs/result.jpg' align="left"> 
+<br>
 ### Single Image Unpaired Translation
 
 <img src='./imgs/High-resolution-painting.png' align="left">  
@@ -72,7 +75,7 @@ python test.py --dataroot ./datasets/horse2zebra --name h2z_pretrained
 python test.py  --dataroot ./datasets/cityscapes/ --direction BtoA  --name CityScapes_pretrained 
 ```
 
-## Pretrained Models
+### Pretrained Models
 
 Download the pre-trained models using the following links and put them under`checkpoints/` directory.
 
@@ -82,7 +85,7 @@ CityScape :[google drive](https://drive.google.com/drive/folders/1HYNhX4SbrqtC8C
 
 image2monet:[google drive](https://drive.google.com/drive/folders/1xQ17DKW6faNXvksd87UGoLsYYeN3PAGV?usp=sharing)
 
-## Evaluate
+### Evaluate
 
 #### Horse2Zerba
 
@@ -106,7 +109,7 @@ For mIoU computation, we use [drn-22](https://github.com/fyu/drn).
 python3 segment.py test -d <data_folder> -c 19 --arch drn_d_22     --pretrain ./checkpoint/drn_d_22_cityscapes.pth --phase test --batch-size 1
 ```
 
-### Citation
+## Citation
 
 If you use this code for your research, please cite our [paper](https://arxiv.org/abs/2204.11018).
 
