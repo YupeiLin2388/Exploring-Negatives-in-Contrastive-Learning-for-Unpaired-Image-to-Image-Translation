@@ -83,9 +83,11 @@ For CityScapes dataset, we frist resize 256*128 then calculate the  FID
 python test_fid.py --name citys_PUT5 --dataroot ./datasets/cityscapes/ --direction BtoA --num_test 500  --aspect_ratio 2.0 --gpu_id 0
 ```
 
+For mIoU computation, we use [drn-22](https://github.com/fyu/drn).
 
-
-
+```
+python3 segment.py test -d list_dir/ -c 19 --arch drn_d_22     --pretrain ./checkpoint/drn_d_22_cityscapes.pth --phase test --batch-size 1
+```
 
 ### Citation
 
@@ -103,4 +105,4 @@ If you use this code for your research, please cite our [paper](https://arxiv.or
 
 ## Acknowledge
 
-Our code is developed based on [CUT](https://github.com/taesungp/contrastive-unpaired-translation) and   [F-LSeSim](https://github.com/lyndonzheng/F-LSeSim)
+Our code is developed based on [CUT](https://github.com/taesungp/contrastive-unpaired-translation) and   [F-LSeSim](https://github.com/lyndonzheng/F-LSeSim) , we also thank , [drn](https://github.com/fyu/drn) for mIoU computation.
