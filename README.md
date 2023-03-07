@@ -46,13 +46,13 @@ Please refer to the original [CUT](https://github.com/taesungp/contrastive-unpai
 #### Horse2Zerba
 
 ```bash
-python train.py --dataroot ./datasets/horse2zebra --name h2z_PUT5 --choose_patch 5 --batch_size 1 --gpu_id 0
+python train.py --dataroot ./datasets/horse2zebra --name h2z_PUT5 --choose_patch 5 --batch_size 4 --gpu_id 0
 ```
 
 #### CityScapes
 
 ```bash
-python train.py   --name citys_PUT5   --choose_patch 5 --batch_size 1 --dataroot ./datasets/cityscapes/ --direction BtoA --gpu_id 0
+python train.py   --name citys_PUT5   --choose_patch 5 --batch_size 4 --dataroot ./datasets/cityscapes/ --direction BtoA --gpu_id 0
 ```
 
 ####  Single Image Unpaired Training
@@ -89,7 +89,7 @@ image2monet:[google drive](https://drive.google.com/drive/folders/1xQ17DKW6faNXv
 
 #### Horse2Zerba
 
-We referred to the code of [F-LSeSim](https://github.com/lyndonzheng/F-LSeSim)and run `test_fid.py`  to calculate the FID value for each epoch. We stored the results of each epoch in `result.csv`.
+We referred to the code of [F-LSeSim](https://github.com/lyndonzheng/F-LSeSim) and run `test_fid.py`  to calculate the FID value for each epoch. We stored the results of each epoch in `result.csv`.
 
 ```bash
 python test_fid.py --dataroot ./datasets/horse2zebra --name h2z_pretrained --num_test 500   --gpu_id 0
