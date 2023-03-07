@@ -46,13 +46,13 @@ Please refer to the original [CUT](https://github.com/taesungp/contrastive-unpai
 #### Horse2Zerba
 
 ```bash
-python train.py --dataroot ./datasets/horse2zebra --name h2z_PUT5 --choose_patch 5 --batch_size 4 --gpu_id 0
+python train.py --dataroot ./datasets/horse2zebra --name h2z_PUT5 --choose_patch 5 --batch_size 1 --gpu_id 0
 ```
 
 #### CityScapes
 
 ```bash
-python train.py   --name citys_PUT5   --choose_patch 5 --batch_size 4 --dataroot ./datasets/cityscapes/ --direction BtoA --gpu_id 0
+python train.py   --name citys_PUT5   --choose_patch 5 --batch_size 1 --dataroot ./datasets/cityscapes/ --direction BtoA --gpu_id 0
 ```
 
 ####  Single Image Unpaired Training
