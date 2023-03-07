@@ -10,7 +10,7 @@
 
 We provide our PyTorch implementation of [Exploring Negatives in Contrastive Learning for Unpaired Image-to-Image Translation](https://arxiv.org/abs/2204.11018)(PUT).
 
-In this paper, we propose a novel model called PUT for unpaired image-to-image translation. Compared with the previous contrastive learning methods, our proposed PUT is stable to learn the information between the corresponding patches, leading to a more effective contrast learning system
+In this paper, we propose a novel model called PUT for unpaired image-to-image translation. Compared with the previous contrastive learning methods, our proposed PUT is stable to learn the information between the corresponding patches, leading to a more effective contrast learning system
 
 ## Example Results
 
