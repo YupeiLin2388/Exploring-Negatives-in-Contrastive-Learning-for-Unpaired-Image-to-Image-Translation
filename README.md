@@ -4,7 +4,7 @@
 
 <br>
 
-<img src='imgs/framework.png' align="left">  
+<img src='./imgs/framework.png' align="left">  
 
 <br><br><br>
 
@@ -16,7 +16,7 @@ In this paper, we propose a novel model called PUT for unpaired image-to-image t
 
 ### Single Image Unpaired Translation
 
-<img src='imgs/High-resolution-painting.png' align="left">  
+<img src='./imgs/High-resolution-painting.png' align="left">  
 
 
 ## Getting Started
