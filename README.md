@@ -67,6 +67,24 @@ image2monet:[google drive](https://drive.google.com/drive/folders/1xQ17DKW6faNXv
 
 ## Evaluate
 
+#### Horse2Zerba
+
+We referred to the code of [F-LSeSim](https://github.com/lyndonzheng/F-LSeSim)and run `test_fid.py`  to calculate the FID value for each epoch. We stored the results of each epoch in `result.csv`.
+
+```bash
+python test_fid.py --dataroot ./datasets/horse2zebra --name h2z_pretrained --num_test 500   --gpu_id 0
+```
+
+#### CityScapes
+
+For CityScapes dataset, we frist resize 256*128 then calculate the  FID
+
+```
+python test_fid.py --name citys_PUT5 --dataroot ./datasets/cityscapes/ --direction BtoA --num_test 500  --aspect_ratio 2.0 --gpu_id 0
+```
+
+
+
 
 
 ### Citation
