@@ -86,7 +86,7 @@ python test_fid.py --name citys_PUT5 --dataroot ./datasets/cityscapes/ --directi
 For mIoU computation, we use [drn-22](https://github.com/fyu/drn).
 
 ```
-python3 segment.py test -d list_dir/ -c 19 --arch drn_d_22     --pretrain ./checkpoint/drn_d_22_cityscapes.pth --phase test --batch-size 1
+python3 segment.py test -d <data_folder> -c 19 --arch drn_d_22     --pretrain ./checkpoint/drn_d_22_cityscapes.pth --phase test --batch-size 1
 ```
 
 ### Citation
