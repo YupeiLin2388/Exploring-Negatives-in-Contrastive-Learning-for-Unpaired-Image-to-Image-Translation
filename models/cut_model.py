@@ -4,7 +4,7 @@ from .base_model import BaseModel
 from . import networks
 from .patchnce import PatchNCELoss
 import util.util as util
-
+#from torchsummary import summary
 
 class CUTModel(BaseModel):
     """ This class implements CUT and FastCUT model, described in the paper
@@ -70,8 +70,8 @@ class CUTModel(BaseModel):
         if self.isTrain:
             self.model_names = ['G', 'F', 'D']
         else:  # during test time, only load G
-            # self.model_names = ['G']
-            self.model_names = ['G', 'F']
+            self.model_names = ['G']
+
         # define networks (both generator and discriminator)
         self.netG = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.normG, not opt.no_dropout, opt.init_type, opt.init_gain, opt.no_antialias, opt.no_antialias_up, self.gpu_ids, opt)
         self.netF = networks.define_F(opt.input_nc, opt.netF, opt.normG, not opt.no_dropout, opt.init_type, opt.init_gain, opt.no_antialias, self.gpu_ids, opt)
@@ -83,14 +83,16 @@ class CUTModel(BaseModel):
             self.criterionGAN = networks.GANLoss(opt.gan_mode).to(self.device)
             self.criterionNCE = []
 
-            # for i in range(len(self.nce_layers)):
-            #     self.criterionNCE.append(PatchNCELoss(opt,self.layers_ranks[i]).to(self.device))
-            #
+            for i in range(len(self.nce_layers)):
+                self.criterionNCE.append(PatchNCELoss(opt,self.layers_ranks[i]).to(self.device))
+
             self.criterionIdt = torch.nn.L1Loss().to(self.device)
             self.optimizer_G = torch.optim.Adam(self.netG.parameters(), lr=opt.lr, betas=(opt.beta1, opt.beta2))
             self.optimizer_D = torch.optim.Adam(self.netD.parameters(), lr=opt.lr, betas=(opt.beta1, opt.beta2))
             self.optimizers.append(self.optimizer_G)
             self.optimizers.append(self.optimizer_D)
+            #summary(self.netG, (3, 256, 256))
+            #summary(self.netD, (3, 256, 256))
 
     def data_dependent_initialize(self, data):
         """
@@ -181,7 +183,7 @@ class CUTModel(BaseModel):
             self.loss_G_GAN = self.criterionGAN(pred_fake, True).mean() * self.opt.lambda_GAN
         else:
             self.loss_G_GAN = 0.0
-
+        #print(self.opt.lambda_NCE)
         if self.opt.lambda_NCE > 0.0:
             self.loss_NCE = self.calculate_NCE_loss(self.real_A, self.fake_B)
         else:
@@ -213,34 +215,3 @@ class CUTModel(BaseModel):
             total_nce_loss += loss.mean()
 
         return total_nce_loss / n_layers
-
-    def keshihua(self, src, tgt,names):
-        feat_k = self.netG(src, [4], encode_only=True)
-        feat_q = self.netG(tgt, [4], encode_only=True)
-        
-        #print(feat_q)
-        print(feat_k[0].shape)
-        iters = int((feat_k[0].shape[2]*feat_k[0].shape[3])/256)
-        k_list = np.array([])
-        q_list = np.array([])
-        for i in range(iters):
-            patch_ids = [[i for i in range(i*256,(i+1)*256)]]
-            a,_ = self.netF(feat_k, self.opt.num_patches,patch_ids,1)
-            b,_ = self.netF(feat_q, self.opt.num_patches,patch_ids,1)
-            #print(len(a))
-            a = a[0].detach().cpu().numpy()
-            b = b[0].detach().cpu().numpy()
-            #print(k_list)
-            if i == 0:
-              k_list = a
-              q_list = b
-            else:
-              k_list = np.append(k_list,a,axis=0)
-              q_list = np.append(q_list,b,axis=0)
-        np.save(names+'__9k_list',k_list)
-        np.save(names+'__9q_list',q_list)
-        print(k_list.shape)
-        print(q_list.shape)
-        # print(b)
-    def keshihua2(self,names):
-        self.keshihua(self.real_A, self.fake_B,names)

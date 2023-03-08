@@ -35,7 +35,7 @@ def save_images(webpage, visuals, image_path, aspect_ratio=1.0, width=256):
     ims, txts, links = [], [], []
 
     for label, im_data in visuals.items():
-        if label in  ['fake_B','real_B']:#add
+        if label in  ['fake_B']:#add
             im = util.tensor2im(im_data)
             image_name = '%s/%s.png' % (label, name)
             os.makedirs(os.path.join(image_dir, label), exist_ok=True)

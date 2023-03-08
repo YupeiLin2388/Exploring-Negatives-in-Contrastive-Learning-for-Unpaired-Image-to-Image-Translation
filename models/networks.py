@@ -550,13 +550,12 @@ class PatchSampleF(nn.Module):
         init_net(self, self.init_type, self.init_gain, self.gpu_ids)
         self.mlp_init = True
 
-    def forward(self, feats, num_patches=64, patch_ids=None,feat_idid = None):
+    def forward(self, feats, num_patches=64, patch_ids=None):
         return_ids = []
         return_feats = []
         if self.use_mlp and not self.mlp_init:
             self.create_mlp(feats)
         for feat_id, feat in enumerate(feats):
-            #print(feat_id)
             B, H, W = feat.shape[0], feat.shape[2], feat.shape[3]
             feat_reshape = feat.permute(0, 2, 3, 1).flatten(1, 2)
             if num_patches > 0:
@@ -572,8 +571,6 @@ class PatchSampleF(nn.Module):
                 x_sample = feat_reshape
                 patch_id = []
             if self.use_mlp:
-                if feat_idid != None:
-                  feat_id = feat_idid
                 mlp = getattr(self, 'mlp_%d' % feat_id)
                 x_sample = mlp(x_sample)
             return_ids.append(patch_id)
@@ -987,17 +984,14 @@ class ResnetGenerator(nn.Module):
         self.model = nn.Sequential(*model)
 
     def forward(self, input, layers=[], encode_only=False):
-        #print(self.model)
         if -1 in layers:
             layers.append(len(self.model))
         if len(layers) > 0:
             feat = input
             feats = []
-            
             for layer_id, layer in enumerate(self.model):
                 # print(layer_id, layer)
                 feat = layer(feat)
-                #print(layer)
                 if layer_id in layers:
                     # print("%d: adding the output of %s %d" % (layer_id, layer.__class__.__name__, feat.size(1)))
                     feats.append(feat)
@@ -1007,6 +1001,7 @@ class ResnetGenerator(nn.Module):
                 if layer_id == layers[-1] and encode_only:
                     # print('encoder only return features')
                     return feats  # return intermediate features alone; stop in the last layers
+
             return feat, feats  # return both output and intermediate features
         else:
             """Standard forward"""

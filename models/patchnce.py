@@ -2,6 +2,7 @@ from packaging import version
 import torch
 from torch import nn
 
+import random
 
 
 
@@ -11,8 +12,6 @@ class PatchNCELoss(nn.Module):
         self.opt = opt
         self.cross_entropy_loss = torch.nn.CrossEntropyLoss(reduction='none')
         self.mask_dtype = torch.uint8 if version.parse(torch.__version__) < version.parse('1.2.0') else torch.bool
-        self.patch_nums = patch
-
         
 
     def forward(self, feat_q, feat_k):
@@ -24,6 +23,8 @@ class PatchNCELoss(nn.Module):
         l_pos = torch.bmm(
             feat_q.view(num_patches, 1, -1), feat_k.view(num_patches, -1, 1))
         l_pos = l_pos.view(num_patches, 1)
+
+        # neg logit
 
         if self.opt.nce_includes_all_negatives_from_minibatch:
             # reshape features as if they are all negatives of minibatch of size 1.
@@ -42,24 +43,16 @@ class PatchNCELoss(nn.Module):
         diagonal = torch.eye(npatches, device=feat_q.device, dtype=self.mask_dtype)[None, :, :]
         l_neg_curbatch.masked_fill_(diagonal, -10.0)
         l_neg = l_neg_curbatch.view(-1, npatches)
-            #elif self.opt.choose_patch !=0:
         l_neg, _ = l_neg.sort(dim=0, descending=True)
+
+          
         l_neg = l_neg[:, :self.opt.choose_patch]
-                #print(l_neg[-3:,])
-                #zero_indexs = l_neg[:,0].reshape(-1)
-                #zero_indexs = zero_indexs.tolist()
-                #indexs =  zero_indexs.index(-10)
-                #n = l_neg.shape[0]-indexs
-                #l_neg[indexs:] = l_neg[:n]
 
         
         
+        
         out = torch.cat((l_pos, l_neg), dim=1) / self.opt.nce_T
-        #print(out[0])
         loss = self.cross_entropy_loss(out, torch.zeros(out.size(0), dtype=torch.long,
-                                                        device=feat_q.device))
-        #print("ranknce_loss:",loss,loss.shape)
-        print(loss)
-        #loss +=self.opt.ib_aphla*ib_loss
-        #print("total_loss",loss)
+                                                       device=feat_q.device))
+
         return loss
