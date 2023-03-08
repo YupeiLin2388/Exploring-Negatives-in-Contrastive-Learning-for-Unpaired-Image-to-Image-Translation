@@ -94,24 +94,10 @@ def save_image(image_numpy, image_path,aspect_ratio=1.0,labels = None):
 
     image_pil = Image.fromarray(image_numpy)
     h, w, _ = image_numpy.shape
-    #if labels == 'fake_B':
-        #print('1')
-    #if aspect_ratio is None:
-    #        pass
     if aspect_ratio > 1.0:
-            image_pil = image_pil.resize((int(h / aspect_ratio), int(w)), Image.BICUBIC)
+            image_pil = image_pil.resize((int(h ), int(w/ aspect_ratio)), Image.BICUBIC)
     elif aspect_ratio < 1.0:
             image_pil = image_pil.resize((int(h / aspect_ratio), w), Image.BICUBIC)
-    #print(type(image_pil))
-    #print(image_pil.shape)
-    #else:
-     #   image_pil = image_pil.resize((360, 288), Image.BICUBIC)
-     #   if aspect_ratio is None:
-      #      pass
-       # elif aspect_ratio > 1.0:
-        #    image_pil = image_pil.resize((h, int(w / aspect_ratio)), Image.NEAREST)
-       # elif aspect_ratio < 1.0:
-        #    image_pil = image_pil.resize((int(h / aspect_ratio), w), Image.NEAREST)
     image_pil.save(image_path)
 
 
