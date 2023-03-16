@@ -25,7 +25,6 @@ class CUTModel(BaseModel):
         parser.add_argument('--lambda_NCE', type=float, default=1.0, help='weight for NCE loss: NCE(G(X), X)')
         parser.add_argument('--nce_idt', type=util.str2bool, nargs='?', const=True, default=False, help='use NCE loss for identity mapping: NCE(G(Y), Y))')
         parser.add_argument('--nce_layers', type=str, default='0,4,8,12,16', help='compute NCE loss on which layers')
-        parser.add_argument('--layers_ranks', type=str, default='25,20,15,10,5', help="the layer's rank")
         parser.add_argument('--nce_includes_all_negatives_from_minibatch',
                             type=util.str2bool, nargs='?', const=True, default=False,
                             help='(used for single image translation) If True, include the negatives from the other samples of the minibatch when computing the contrastive loss. Please see models/patchnce.py for more details.')
@@ -62,7 +61,6 @@ class CUTModel(BaseModel):
         self.loss_names = ['G_GAN', 'D_real', 'D_fake', 'G', 'NCE']
         self.visual_names = ['real_A', 'fake_B', 'real_B']
         self.nce_layers = [int(i) for i in self.opt.nce_layers.split(',')]
-        self.layers_ranks = [int(i) for i in self.opt.layers_ranks.split(',')]
         if opt.nce_idt and self.isTrain:
             self.loss_names += ['NCE_Y']
             self.visual_names += ['idt_B']
@@ -84,7 +82,7 @@ class CUTModel(BaseModel):
             self.criterionNCE = []
 
             for i in range(len(self.nce_layers)):
-                self.criterionNCE.append(PatchNCELoss(opt,self.layers_ranks[i]).to(self.device))
+                self.criterionNCE.append(PatchNCELoss(opt).to(self.device))
 
             self.criterionIdt = torch.nn.L1Loss().to(self.device)
             self.optimizer_G = torch.optim.Adam(self.netG.parameters(), lr=opt.lr, betas=(opt.beta1, opt.beta2))

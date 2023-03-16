@@ -7,7 +7,7 @@ import random
 
 
 class PatchNCELoss(nn.Module):
-    def __init__(self, opt,patch):
+    def __init__(self, opt):
         super().__init__()
         self.opt = opt
         self.cross_entropy_loss = torch.nn.CrossEntropyLoss(reduction='none')
